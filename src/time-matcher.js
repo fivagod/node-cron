@@ -1,6 +1,6 @@
 const validatePattern = require('./pattern-validation');
 const convertExpression = require('./convert-expression');
-const moment = require('moment');
+const moment = require('moment')
 
 function matchPattern(pattern, value){
     if( pattern.indexOf(',') !== -1 ){
@@ -19,10 +19,10 @@ class TimeMatcher{
     }
 
     match(date){
-        let [seconds, minutes, hours, day, month, weekday] = [date.getSeconds(), date.getMinutes(), date.getHours(), date.getDate(), date.getMonth() + 1, date.getDay()];
+        let [seconds, minutes, hours, day, month, weekday] = [date.getSeconds(), date.getMinutes(), date.getHours(), date.getDate(), date.getMonth() + 1, date.getDay()]
         if(this.timezone){
             let dt = moment(date).tz(this.timezone);
-            [seconds, minutes, hours, day, month, weekday] = [dt.econds(), dt.minutes(), dt.hours(), dt.date(), dt.month() + 1, dt.day()];
+            [seconds, minutes, hours, day, month, weekday] = [dt.seconds(), dt.minutes(), dt.hours(), dt.date(), dt.month() + 1, dt.day()]
         }
         var runOnSecond = matchPattern(this.expressions[0], seconds);
         var runOnMinute = matchPattern(this.expressions[1], minutes);
