@@ -1,6 +1,6 @@
 const validatePattern = require('./pattern-validation');
 const convertExpression = require('./convert-expression');
-const moment = require('moment')
+const moment = require('moment');
 
 function matchPattern(pattern, value){
     if( pattern.indexOf(',') !== -1 ){
@@ -19,15 +19,17 @@ class TimeMatcher{
     }
 
     match(date){
+        let [seconds, minutes, hours, day, month, weekday] = [date.getSeconds(), date.getMinutes(), date.getHours(), date.getDate(), date.getMonth() + 1, date.getDay()];
         if(this.timezone){
-            date = moment(date).tz(this.timezone).toDate();
+            let dt = moment(date).tz(this.timezone);
+            [seconds, minutes, hours, day, month, weekday] = [dt.econds(), dt.minutes(), dt.hours(), dt.date(), dt.month() + 1, dt.day()];
         }
-        var runOnSecond = matchPattern(this.expressions[0], date.getSeconds());
-        var runOnMinute = matchPattern(this.expressions[1], date.getMinutes());
-        var runOnHour = matchPattern(this.expressions[2], date.getHours());
-        var runOnDay = matchPattern(this.expressions[3], date.getDate());
-        var runOnMonth = matchPattern(this.expressions[4], date.getMonth() + 1);
-        var runOnWeekDay = matchPattern(this.expressions[5], date.getDay());
+        var runOnSecond = matchPattern(this.expressions[0], seconds);
+        var runOnMinute = matchPattern(this.expressions[1], minutes);
+        var runOnHour = matchPattern(this.expressions[2], hours);
+        var runOnDay = matchPattern(this.expressions[3], day);
+        var runOnMonth = matchPattern(this.expressions[4], month);
+        var runOnWeekDay = matchPattern(this.expressions[5], weekday);
 
         return runOnSecond && runOnMinute && runOnHour && runOnDay && runOnMonth && runOnWeekDay;
     }
