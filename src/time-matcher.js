@@ -1,6 +1,6 @@
 const validatePattern = require('./pattern-validation');
 const convertExpression = require('./convert-expression');
-const tzOffset = require('tz-offset');
+const moment = require('moment')
 
 function matchPattern(pattern, value){
     if( pattern.indexOf(',') !== -1 ){
@@ -20,7 +20,7 @@ class TimeMatcher{
 
     match(date){
         if(this.timezone){
-            date = tzOffset.timeAt(date, this.timezone);
+            date = moment(date).tz(this.timezone).valueOf();
         }
         var runOnSecond = matchPattern(this.expressions[0], date.getSeconds());
         var runOnMinute = matchPattern(this.expressions[1], date.getMinutes());
