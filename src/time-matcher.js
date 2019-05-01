@@ -20,7 +20,7 @@ class TimeMatcher{
 
     match(date){
         if(this.timezone){
-            date = moment(date).tz(this.timezone).valueOf();
+            date = moment(date).tz(this.timezone).toDate();
         }
         var runOnSecond = matchPattern(this.expressions[0], date.getSeconds());
         var runOnMinute = matchPattern(this.expressions[1], date.getMinutes());
